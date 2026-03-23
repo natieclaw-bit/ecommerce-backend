@@ -1,0 +1,22 @@
+{
+  "task_id": "T20260323-001",
+  "name": "建立公司第一個電商後台專案 MVP",
+  "owner": "Engineer",
+  "status": "running",
+  "priority": "high",
+  "dependencies": [],
+  "created_at": "2026-03-23T19:08:00+08:00",
+  "started_at": "2026-03-23T19:09:00+08:00",
+  "completed_at": null,
+  "context": {
+    "stack": "Laravel 13 + MySQL",
+    "scope": [
+      "商品管理",
+      "庫存管理",
+      "客戶下單",
+      "訂單進度查詢"
+    ]
+  },
+  "report_required": true,
+  "resource_lock": null
+}
