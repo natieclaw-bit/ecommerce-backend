@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminInventoryController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StorefrontController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin');
@@ -34,3 +35,7 @@ Route::middleware('admin.auth')->group(function () {
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);
+
+Route::get('/cart', [StorefrontController::class, 'cart']);
+Route::get('/checkout', [StorefrontController::class, 'checkout']);
+Route::get('/orders/tracking', [StorefrontController::class, 'tracking']);
