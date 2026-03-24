@@ -16,7 +16,18 @@ class AdminController extends Controller
             'pending_orders' => Order::where('status', 'pending')->count(),
         ];
 
-        return view('admin.dashboard', compact('stats'));
+        $recentOrders = Order::with(['items', 'statusLogs'])
+            ->latest()
+            ->limit(5)
+            ->get();
+
+        $lowStockProducts = Product::with('inventory')
+            ->whereHas('inventory', fn ($query) => $query->where('quantity', '<=', 10))
+            ->orderByRaw('(select quantity from inventories where inventories.product_id = products.id) asc')
+            ->limit(5)
+            ->get();
+
+        return view('admin.dashboard', compact('stats', 'recentOrders', 'lowStockProducts'));
     }
 
     public function orders()

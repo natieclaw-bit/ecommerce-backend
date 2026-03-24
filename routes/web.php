@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminInventoryController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin');
@@ -30,3 +31,6 @@ Route::middleware('admin.auth')->group(function () {
     Route::get('/admin/orders', [AdminOrderController::class, 'index']);
     Route::put('/admin/orders/{order}/status', [AdminOrderController::class, 'updateStatus']);
 });
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{product}', [ProductController::class, 'show']);

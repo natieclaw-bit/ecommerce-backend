@@ -26,9 +26,27 @@ class DatabaseSeeder extends Seeder
         );
 
         $products = collect([
-            ['sku' => 'CF-001', 'name' => '經典咖啡豆', 'price' => 320, 'quantity' => 48],
-            ['sku' => 'DG-002', 'name' => '濾掛咖啡組', 'price' => 180, 'quantity' => 120],
-            ['sku' => 'BT-003', 'name' => '冷萃玻璃瓶', 'price' => 450, 'quantity' => 12],
+            [
+                'sku' => 'CF-001',
+                'name' => '經典咖啡豆',
+                'price' => 320,
+                'quantity' => 48,
+                'image' => 'https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=800&q=80',
+            ],
+            [
+                'sku' => 'DG-002',
+                'name' => '濾掛咖啡組',
+                'price' => 180,
+                'quantity' => 120,
+                'image' => 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80',
+            ],
+            [
+                'sku' => 'BT-003',
+                'name' => '冷萃玻璃瓶',
+                'price' => 450,
+                'quantity' => 12,
+                'image' => 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+            ],
         ])->map(function ($item) {
             $product = Product::updateOrCreate(
                 ['sku' => $item['sku']],
@@ -36,6 +54,7 @@ class DatabaseSeeder extends Seeder
                     'name' => $item['name'],
                     'slug' => Str::slug($item['name'] . '-' . $item['sku']),
                     'description' => $item['name'] . ' 商品介紹待補。',
+                    'image_url' => $item['image'],
                     'price' => $item['price'],
                     'status' => 'active',
                 ]
