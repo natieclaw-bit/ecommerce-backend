@@ -15,6 +15,8 @@
 - name
 - slug
 - description
+- image_url
+- cost_price (decimal, default 0, 反映採購/製造成本)
 - price
 - status
 - created_at

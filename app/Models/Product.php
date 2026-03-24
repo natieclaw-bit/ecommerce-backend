@@ -16,6 +16,7 @@ class Product extends Model
         'slug',
         'description',
         'image_url',
+        'cost_price',
         'price',
         'status',
     ];

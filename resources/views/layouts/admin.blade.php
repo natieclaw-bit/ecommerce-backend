@@ -275,6 +275,7 @@
                         ['label' => '商品管理', 'href' => '/admin/products', 'pattern' => 'admin/products*'],
                         ['label' => '庫存監控', 'href' => '/admin/inventory', 'pattern' => 'admin/inventory*'],
                         ['label' => '訂單追蹤', 'href' => '/admin/orders', 'pattern' => 'admin/orders*'],
+                        ['label' => '帳務報表', 'href' => '/admin/reports/finance', 'pattern' => 'admin/reports/finance'],
                     ];
                 @endphp
                 <nav class="admin-nav">

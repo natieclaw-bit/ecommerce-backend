@@ -4,18 +4,52 @@
 
 @section('content')
     <div class="surface">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;">
             <div>
                 <h1 style="margin:0;">訂單管理</h1>
-                <p style="margin:6px 0 0;color:var(--muted);">追蹤付款、出貨與完成進度</p>
+                <p style="margin:6px 0 0;color:var(--muted);">搜尋訂單、篩選付款 / 出貨狀態並快速更新流程</p>
             </div>
         </div>
 
-        @if (session('success'))
-            <div style="margin-bottom:16px;padding:12px 16px;border-radius:14px;background:rgba(110,231,183,0.15);color:#a7f3d0;">
-                {{ session('success') }}
+        <form method="get" action="/admin/orders" style="margin-bottom:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;align-items:end;">
+            <label>訂單 / 客戶關鍵字
+                <input type="text" name="keyword" value="{{ $filters['keyword'] ?? '' }}" placeholder="編號、姓名、電話">
+            </label>
+            <label>狀態
+                <select name="status">
+                    <option value="">全部</option>
+                    @foreach($statusOptions as $status)
+                        <option value="{{ $status }}" @selected(($filters['status'] ?? '') === $status)>{{ $status }}</option>
+                    @endforeach
+                </select>
+            </label>
+            <label>建立日期（起）
+                <input type="date" name="date_from" value="{{ $filters['date_from'] ?? '' }}">
+            </label>
+            <label>建立日期（迄）
+                <input type="date" name="date_to" value="{{ $filters['date_to'] ?? '' }}">
+            </label>
+            <label>最低金額 (NT$)
+                <input type="number" name="amount_min" step="1" value="{{ $filters['amount_min'] ?? '' }}">
+            </label>
+            <label>最高金額 (NT$)
+                <input type="number" name="amount_max" step="1" value="{{ $filters['amount_max'] ?? '' }}">
+            </label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button type="submit" class="btn btn-primary">套用篩選</button>
+                <a href="/admin/orders" class="btn btn-ghost">重設條件</a>
             </div>
-        @endif
+        </form>
+
+        @php $totalOrders = $orders->total(); @endphp
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--muted);flex-wrap:wrap;gap:12px;">
+            <div>共 {{ $totalOrders }} 筆訂單</div>
+            @if (session('success'))
+                <div style="padding:8px 12px;border-radius:12px;background:rgba(110,231,183,0.15);color:#a7f3d0;">
+                    {{ session('success') }}
+                </div>
+            @endif
+        </div>
 
         @php
             $statusVariants = [
@@ -53,7 +87,7 @@
                                 @csrf
                                 @method('PUT')
                                 <select name="status">
-                                    @foreach(['pending','paid','packing','shipped','completed','cancelled'] as $status)
+                                    @foreach($statusOptions as $status)
                                         <option value="{{ $status }}" @selected($order->status === $status)>{{ $status }}</option>
                                     @endforeach
                                 </select>
@@ -68,5 +102,9 @@
                 @endforelse
             </tbody>
         </table>
+
+        <div style="margin-top:18px;">
+            {{ $orders->links() }}
+        </div>
     </div>
 @endsection
